@@ -120,6 +120,10 @@ body{
     color:#fff;
     margin:23px 0 0 20px;
 }
+.user_info span i {
+    font-style: normal;
+}
+
 .user_info b{
     float: left;
     width: 120px;

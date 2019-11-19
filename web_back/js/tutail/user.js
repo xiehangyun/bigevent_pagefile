@@ -9,6 +9,10 @@ var user = {
         function (res) {
             fn(res)
         })
+    },
+    getUser:function (fn) {
+        $.get(url+"admin/getuser",function (res) {
+            fn(res)
+        })
     }
-    get
 }
