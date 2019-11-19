@@ -14,5 +14,10 @@ var user = {
         $.get(url+"admin/getuser",function (res) {
             fn(res)
         })
+    },
+    logOut:function (fn) {
+        $.post(url+'admin/logout',function () {
+            fn()
+        })
     }
 }
