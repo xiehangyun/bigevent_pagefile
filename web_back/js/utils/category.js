@@ -8,5 +8,15 @@ var category = {
         $.post(portConfig.delete,{id:delId},function (res) {
             fn(res);
         })
+    },
+    edit:function (id,name,slug,fn) {
+        $.post(portConfig.edit,{id:id,name:name,slug:slug},function (res) {
+            fn(res)
+        })
+    },
+    add:function (name,slug,fn) {
+        $.post(portConfig.add,{name:name,slug:slug},function (res) {
+            fn(res)
+        })
     }
 } 

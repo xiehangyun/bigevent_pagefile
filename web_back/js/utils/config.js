@@ -7,5 +7,7 @@ var portConfig = {
 
 
     search: url + "admin/category_search",
-    delete: url + "admin/category_delete"
+    delete: url + "admin/category_delete",
+    edit: url + "admin/category_edit",
+    add: url + "admin/category_add"
 }

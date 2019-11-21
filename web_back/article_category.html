@@ -61,19 +61,19 @@
                     <h4 class="modal-title">新增分类</h4>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form id="add_form">
                         <div class="form-group">
                             <label for="recipient-name" class="control-label">分类名称:</label>
                             <input type="text" class="form-control" id="recipient-name">
                         </div>
                         <div class="form-group">
                             <label for="message-text" class="control-label">分类别名:</label>
-                            <input type="text" class="form-control" id="recipient-name">
+                            <input type="text" class="form-control" id="recipient-slug">
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-default addCancel" data-dismiss="modal">取消</button>
                     <button type="button" class="btn btn-primary" id="model_add">新增</button>
                 </div>
             </div>
@@ -141,7 +141,26 @@
 
 
         // 新增分类
+        $('#model_add').click(function () {
+            var name = $("#recipient-name").val().trim();
+            var slug = $("#recipient-slug").val().trim();
+            if (name ==='' || slug === '') {
+                $('#add_form').append(`<div class="modal-body notNull" style="padding:0">
+                    <p id='modalBody' style="color:red">内容不能为空&hellip;</p>
+                </div>`);
+                $('.addCancel').one("click",function () {
+                    $(".notNull").remove();
+                })
+                return;
+            }
+            category.add(name,slug,function (res) {
+                $('#addModal').modal('hide');
+                UserShow();
+            })
+        })
 
+        // 编辑文章类别
+        
     </script>
 </body>
 
