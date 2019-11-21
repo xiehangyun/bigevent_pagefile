@@ -13,8 +13,8 @@
     <script src="js/jquery-1.12.4.min.js"></script>
     <script src="js/bootstrap/js/bootstrap.min.js"></script>
     <script src="./js/template-web.js"></script>
-    <script src="./js/tutail/config.js"></script>
-    <script src="./js/tutail/user.js"></script>
+    <script src="./js/utils/config.js"></script>
+    <script src="./js/utils/category.js"></script>
 </head>
 
 <body>
@@ -73,7 +73,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" id="model_shutoff">关闭</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                     <button type="button" class="btn btn-primary" id="model_add">新增</button>
                 </div>
             </div>
@@ -116,7 +116,7 @@
         // 显示类别
         UserShow()
         function UserShow() {
-            user.search(function (res) {
+            category.search(function (res) {
                 $('#tableContent').html(template("tempTable", res))
             })
         }
@@ -128,11 +128,11 @@
             $('#modalBody').html("是否要删除？");
             var id = $(this).attr('data-id');
             $(".btn-primary").one("click", function () {
-                user.delete(id, function (res) {
+                category.delete(id, function (res) {
                     UserShow();
                     if (res.code == 200) {
                         $('#delModal').modal('hide');
-                    }else {
+                    } else {
                         $('#modalBody').html(res.msg);
                     }
                 })
@@ -141,7 +141,7 @@
 
 
         // 新增分类
-        
+
     </script>
 </body>
 
