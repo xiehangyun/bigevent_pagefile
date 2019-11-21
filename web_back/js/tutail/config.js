@@ -3,8 +3,9 @@ var url = "http://192.168.43.33:8000/";
 var portConfig = {
     logIn: url + "admin/login",
     getUser: url + 'admin/getuser',
-    logOut: url + "admin/logout"
+    logOut: url + "admin/logout",
 
 
-    
+    search: url + "admin/category_search",
+    delete: url + "admin/category_delete"
 }
