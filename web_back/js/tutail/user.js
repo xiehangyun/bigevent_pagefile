@@ -1,22 +1,18 @@
-var url = "http://192.168.43.33:8000/";
-
-
-
 
 var user = {
     login:function (userName,passWord,fn) {
-        $.post(url+"admin/login",{user_name:userName,password:passWord},
+        $.post(portConfig.logIn,{user_name:userName,password:passWord},
         function (res) {
             fn(res)
         })
     },
     getUser:function (fn) {
-        $.get(url+"admin/getuser",function (res) {
+        $.get(portConfig.getUser,function (res) {
             fn(res)
         })
     },
     logOut:function (fn) {
-        $.post(url+'admin/logout',function () {
+        $.post(portConfig.logOut,function () {
             fn()
         })
     }
