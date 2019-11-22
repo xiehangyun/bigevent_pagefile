@@ -1,4 +1,4 @@
-var url = "http://192.168.43.33:8000/";
+var url = "http://192.168.165.55:8000/";
 
 var portConfig = {
     logIn: url + "admin/login",
