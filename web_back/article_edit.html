@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="css/main.css">
     <link type="text/css" rel="stylesheet" href="js/jedate/css/jedate.css">
     <script src="js/jquery-1.12.4.min.js"></script>
+    <script src="./js/bootstrap/js/bootstrap.min.js"></script>
+    <script src="./js/bootbox/bootbox.min.js"></script>
     <script src="js/jedate/js/jedate.js"></script>
     <script src="js/tinymce/js/tinymce/tinymce.min.js"></script>
     <script src="js/tinymce/js/tinymce_setup.js"></script>
@@ -105,13 +107,8 @@
             fd.append('id',id);
             fd.append("content",tinyMCE.activeEditor.getContent());
             article.article_edit(fd,function (res) {
-                alert(res.msg)
-                
+                bootbox.alert(res.msg);
             })
-
-
-
-
         })
     </script>
 </body>
