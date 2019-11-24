@@ -18,6 +18,7 @@
     <script src="./js/template-web.js"></script>
     <script src="./js/utils/config.js"></script>
     <script src="./js/utils/category.js"></script>
+    <script src="./js/utils/article.js"></script>
 </head>
 
 <body>
@@ -26,24 +27,24 @@
             文章编辑
         </div>
         <div class="container-fluid common_con">
-            <form class="form-horizontal article_form">
+            <form class="form-horizontal article_form" id="myform">
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">文章标题：</label>
                     <div class="col-sm-10">
-                        <input type="email" class="form-control" id="inputEmail3" value="文章标题文字">
+                        <input type="email" class="form-control" name='title' id="article_title" value="文章标题文字">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputPassword3" class="col-sm-2 control-label">文章封面：</label>
                     <div class="col-sm-10">
-                        <img src="images/pic06.jpg" class="article_cover">
-                        <input type="file" id="exampleInputFile">
+                        <img src="images/pic06.jpg" id="article_cover" class="article_cover">
+                        <input type="file" id="exampleInputFile" name="cover">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">文章类别：</label>
                     <div class="col-sm-4">
-                        <select class="form-control">
+                        <select class="form-control" id="article_type" name="type">
                             <option>类别一</option>
                         </select>
                     </div>
@@ -53,7 +54,7 @@
                     <div class="col-sm-4">
 
                         <div class="input-group">
-                            <input type="text" class="form-control" value="2019-05-17" id="dateinput">
+                            <input type="text" class="form-control" name="date" value="2019-05-17" id="article_date">
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="button"
                                     onclick="jeDate('#dateinput',{trigger:false,format: 'YYYY-MM-DD'})"><i
@@ -65,12 +66,14 @@
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">文章内容：</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" id="rich_content" name="content" placeholder="文章内容" value="文章内容">
+                        <textarea class="form-control" id="rich_content" placeholder="文章内容">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda fugiat illo nihil molestias ab. Laborum eius non atque, totam sapiente quae obcaecati assumenda ratione inventore pariatur maiores, qui libero delectus.
+                            </textarea>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-success">修改</button>
+                        <button type="button" class="btn btn-success">修改</button>
                     </div>
                 </div>
             </form>
@@ -78,12 +81,37 @@
     </div>
     <script id='tempTable' type="text/html">
         {{each data item}}
-        <option data-id="{{item.id}}">{{item.name}}</option>
+        <option data-id="{{item.id}}" value="{{item.id}}">{{item.name}}</option>
         {{/each}}
     </script>
     <script>
         category.search(function (res) {
             $('.form-control').html(template("tempTable", res))
+        })
+
+
+        var id = location.search.substr(4);
+        article.article_search({id:id},function (res){
+            $('#article_title').val(res.data.title);
+            $('#article_type').val(res.data.type)
+            $('#article_cover').prop('src',res.data.cover);
+            $('#article_date').val(res.data.date);
+            $('#rich_content').html(res.data.content)
+        })
+        
+
+        $('.btn-success').click(function () {
+            var fd = new FormData( document.getElementById('myform'));
+            fd.append('id',id);
+            fd.append("content",tinyMCE.activeEditor.getContent());
+            article.article_edit(fd,function (res) {
+                alert(res.msg)
+                
+            })
+
+
+
+
         })
     </script>
 </body>
