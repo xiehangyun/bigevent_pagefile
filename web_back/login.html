@@ -11,8 +11,8 @@
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" href="./js/bootstrap/css/bootstrap.min.css">
     <script src="./js/jquery-1.12.4.min.js"></script>
-    <script src="./js/tutail/config.js"></script>
-    <script src="./js/tutail/user.js"></script>
+    <script src="./js/utils/config.js"></script>
+    <script src="./js/utils/user.js"></script>
 </head>
 
 <body>
@@ -55,21 +55,22 @@
 
     <script src="./js/bootstrap/js/bootstrap.min.js"></script>
     <script>
-        $('.input_sub').click(function () {
-            var userName = $('.input_txt').val().trim();
-            var passWord = $('.input_pass').val().trim();
+        $('.input_sub').click( () => {
+            let userName = $('.input_txt').val().trim();
+            let passWord = $('.input_pass').val().trim();
             if (userName === '' || passWord === '') {
                 $('#myModal').modal();
                 $('#modalBody').text('用户名/密码不能为空')
                 return;
             }
-            user.login(userName, passWord, function (res) {
-                if (res.code == 200) {
+            login(userName, passWord, (res) => {
+                let {code,msg} = res;
+                if (code == 200) {
                     location.href = 'index.html';
                 }
                 else {
                     $('#myModal').modal();
-                    $('#modalBody').text(res.msg)
+                    $('#modalBody').text(msg)
                 }
             })
         })

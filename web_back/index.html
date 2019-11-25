@@ -131,21 +131,22 @@
         }
     </script>
     <script>
-        user.getUser(function (res) {
-            $('#userName').text(res.data.nickname);
-            $('.userAdmin').prop('src', res.data.user_pic);
+        getUser((res) => {
+            let { data: { nickname, user_pic } } = res;
+            $('#userName').text(nickname);
+            $('.userAdmin').prop('src', user_pic);
         })
 
-        $('#userQuit').click(function () {
+        $('#userQuit').click( () => {
             $('#myModal').modal();
             $('#modalBody').text('是否要退出？')
-            $('.btn-primary').click(function () {
-                user.logOut(function () {
+            $('.btn-primary').click( () => {
+                logOut( () => {
                     location.href = "login.html"
                 });
             }
             )
-            $('.btn-default').click(function () {
+            $('.btn-default').click( () => {
                 $('.btn-default').unbind('click');
                 $('.btn-primary').unbind('click');
             })

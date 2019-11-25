@@ -88,23 +88,24 @@
     </script>
     <script>
 
-        var id = location.search.substr(4);
-        category.search(function (res) {
+        let id = location.search.substr(4);
+        cat_search((res) => {
             $('.form-control').html(template("tempTable", res));
-            article.article_search({ id: id }, function (res) {
-                $('#article_title').val(res.data.title);
-                $('#article_type').val(res.data.type)
-                $('#article_cover').prop('src', res.data.cover);
-                $('#article_date').val(res.data.date);
-                $('#rich_content').html(res.data.content)
+            art_search({ id: id },(res) => {
+                let {data:{title,type,cover,date,content}} = res;
+                $('#article_title').val(title);
+                $('#article_type').val(type)
+                $('#article_cover').prop('src', cover);
+                $('#article_date').val(date);
+                $('#rich_content').html(content)
             })
         })
 
-        $('.btn-success').click(function () {
-            var fd = new FormData(document.getElementById('myform'));
+        $('.btn-success').click(() => {
+            let fd = new FormData(document.getElementById('myform'));
             fd.append('id', id);
             fd.append("content", tinyMCE.activeEditor.getContent());
-            article.article_edit(fd, function (res) {
+            art_article_edit(fd,(res) => {
                 bootbox.alert(res.msg);
             })
         })

@@ -110,15 +110,16 @@
     </script>
 
     <script>
-        category.search(function (res) {
+        cat_search( (res) => {
             $("#category_select").html(template("template_category", res))
         });
 
-        $('#new_article_release').click(function () {
-            var fd = new FormData(document.getElementById('article_form'));
+        $('#new_article_release').click( () => {
+            let fd = new FormData(document.getElementById('article_form'));
             fd.append('state',"已发布");
             fd.append("content",tinyMCE.activeEditor.getContent());
-            article.article_publish(fd,function (res) {
+            art_publish(fd, (res) => {
+                let {msg} = res;
                 $('#release_Modal').modal();
                 $('#delete_modalBody').html(res.msg)
             })

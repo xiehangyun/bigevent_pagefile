@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="css/main.css">
     <script src="js/jquery-1.12.4.min.js"></script>
     <script src="./js/bootstrap/js/bootstrap.min.js"></script>
-    
+
 </head>
 
 <body>
@@ -125,37 +125,36 @@
     </script>
     <script>
         // 设置左侧菜单
-        $('#release_btn').click(function () {
+        $('#release_btn').click(() => {
             window.parent.setMenu(1, 1);
         })
 
 
-        category.search(function (res) {
+        cat_search((res) => {
             $("#selCategory").html(template("template_list", res))
         })
 
-        var curState = '';
-        var curType = '';
-        var curTotalPage = '';
-        var curPage = 1;
-        articleSearch();
-        function articleSearch() {
-            article.article_search({ page: curPage, type: curType, state: curState }, function (res) {
+        let curState = '';
+        let curType = '';
+        let curTotalPage = '';
+        let curPage = 1;
+        articleSearch = () => {
+            art_search({ page: curPage, type: curType, state: curState }, (res) => {
+                let { totalPage } = res;
                 $("#articleContainer").html(template("template_article", res))
-
-                if (res.totalPage != curTotalPage) {
+                if (totalPage != curTotalPage) {
                     $('#pagination').twbsPagination('destroy');
                 }
-                curTotalPage = res.totalPage;
+                curTotalPage = totalPage;
                 $('#pagination').twbsPagination({
-                    totalPages: res.totalPage, // 总页数
+                    totalPages: totalPage, // 总页数
                     visiblePages: 7, // 可见页数
                     initiateStartPageClick: false, // 不要一打开就去触发点击事件
                     first: '首页',
                     prev: '上一页',
                     next: '下一页',
                     last: '尾页',
-                    onPageClick: function (event, page) {
+                    onPageClick: (event, page) => {
                         // 更新全局变量curPage, 重新发请求
                         curPage = page
                         // alert(page);
@@ -164,19 +163,20 @@
                 });
             })
         }
-        $("#btnSearch").click(function () {
+        articleSearch();
+        $("#btnSearch").click(() => {
             curType = $("#selCategory").val();
             curState = $("#selStatus").val();
             curPage = 1;
             articleSearch();
         })
 
-        $("#articleContainer").on("click", "#delete_article", function () {
-            var id = $(this).attr("data-id");
+        $("#articleContainer").on("click", "#delete_article",function() {
+            let id = $(this).attr("data-id");
             $('#delete_Modal').modal();
             $('#delete_modalBody').html("确定要删除吗？");
-            $('#delete_primary').one('click', function () {
-                article.article_delete(id, function () {
+            $('#delete_primary').one('click', () => {
+                art_delete(id, (res) => {
                     articleSearch();
                 });
                 $('#delete_Modal').modal("hide");

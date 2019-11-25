@@ -140,26 +140,23 @@
     <script>
 
         // 显示类别
+        
+        UserShow = () => {cat_search((res) => { $('#tableContent').html(template("tempTable", res))})};
         UserShow()
-        function UserShow() {
-            category.search(function (res) {
-                $('#tableContent').html(template("tempTable", res))
-            })
-        }
-
 
         // 删除类别
         $('#tableContent').on("click", ".del", function () {
             $('#delModal').modal();
             $('#modalBody').html("是否要删除？");
-            var id = $(this).attr('data-id');
-            $(".btn-primary").one("click", function () {
-                category.delete(id, function (res) {
+            let id = $(this).attr('data-id');
+            $(".btn-primary").one("click",() => {
+                cat_delete(id,(res) => {
                     UserShow();
-                    if (res.code == 200) {
+                    let {code,msg} = res;
+                    if (code == 200) {
                         $('#delModal').modal('hide');
                     } else {
-                        $('#modalBody').html(res.msg);
+                        $('#modalBody').html(msg);
                     }
                 })
             })
@@ -167,9 +164,9 @@
 
 
         // 新增分类
-        $('#model_add').click(function () {
-            var name = $("#recipient-name").val().trim();
-            var slug = $("#recipient-slug").val().trim();
+        $('#model_add').click(() => {
+            let name = $("#recipient-name").val().trim();
+            let slug = $("#recipient-slug").val().trim();
             if (name === '' || slug === '') {
                 $('#add_form').append(`<div class="modal-body notNull" style="padding:0">
                     <p id='modalBody' style="color:red">内容不能为空&hellip;</p>
@@ -179,7 +176,7 @@
                 })
                 return;
             }
-            category.add(name, slug, function (res) {
+            cat_add(name, slug,(res) => {
                 $('#addModal').modal('hide');
                 UserShow();
             })
@@ -191,20 +188,20 @@
             $(".alterName").val($(this).parent().siblings('.category_name').text());
             $(".alterSlug").val($(this).parent().siblings('.category_slug').text());
             $('#model_alter').attr('alter-id', $(this).siblings('.del').attr('data-id'))
-            $("#model_alter").one('click', function () {
-                var id = $('#model_alter').attr('alter-id');
-                var name = $(".alterName").val();
-                var slug = $(".alterSlug").val();
+            $("#model_alter").one('click',() => {
+                let id = $('#model_alter').attr('alter-id');
+                let name = $(".alterName").val();
+                let slug = $(".alterSlug").val();
                 if (name === '' || slug === '') {
                     $('#alter_form').append(`<div class="modal-body notNullAlter" style="padding:0">
                     <p id='modalBody' style="color:red">内容不能为空&hellip;</p>
                 </div>`);
-                    $('.addCancel').one("click", function () {
+                    $('.addCancel').one("click",() => {
                         $(".notNullAlter").remove();
                     })
                     return;
                 }
-                category.edit(id, name, slug, function (res) {
+                cat_edit(id, name, slug,(res) => {
                     $('#alterModal').modal('hide');
                     UserShow();
                 })
