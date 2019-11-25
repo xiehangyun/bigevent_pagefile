@@ -87,26 +87,24 @@
         {{/each}}
     </script>
     <script>
-        category.search(function (res) {
-            $('.form-control').html(template("tempTable", res))
-        })
-
 
         var id = location.search.substr(4);
-        article.article_search({id:id},function (res){
-            $('#article_title').val(res.data.title);
-            $('#article_type').val(res.data.type)
-            $('#article_cover').prop('src',res.data.cover);
-            $('#article_date').val(res.data.date);
-            $('#rich_content').html(res.data.content)
+        category.search(function (res) {
+            $('.form-control').html(template("tempTable", res));
+            article.article_search({ id: id }, function (res) {
+                $('#article_title').val(res.data.title);
+                $('#article_type').val(res.data.type)
+                $('#article_cover').prop('src', res.data.cover);
+                $('#article_date').val(res.data.date);
+                $('#rich_content').html(res.data.content)
+            })
         })
-        
 
         $('.btn-success').click(function () {
-            var fd = new FormData( document.getElementById('myform'));
-            fd.append('id',id);
-            fd.append("content",tinyMCE.activeEditor.getContent());
-            article.article_edit(fd,function (res) {
+            var fd = new FormData(document.getElementById('myform'));
+            fd.append('id', id);
+            fd.append("content", tinyMCE.activeEditor.getContent());
+            article.article_edit(fd, function (res) {
                 bootbox.alert(res.msg);
             })
         })
