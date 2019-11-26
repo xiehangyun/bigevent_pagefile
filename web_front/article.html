@@ -239,20 +239,20 @@
         dayjs.locale('zh-cn');
 
 
-        var id = location.search.substr(4)
-        category.search(function (res) {
+        let id = location.search.substr(4)
+        cat_search((res) => {
             $('.level_two').html(`<li class="up"></li>` + template('category_temp', res))
             $('.left_menu').html(template('category_temp', res))
         })
-        article.article_search({ id: id }, function (res) {
+        art_search({ id: id }, (res) => {
             // console.log(res);
-            var type = res.data.type;
-            $('.article_title').html(res.data.title);
-            $('#author').html(res.data.author);
-            $('#date').html(res.data.date);
-            $('#content').html(res.data.content);
-            category.search(function (res) {
-                type = res.data.find(function (item, index) {
+            let {data:{type,title,author,date,content}} = res
+            $('.article_title').html(title);
+            $('#author').html(author);
+            $('#date').html(date);
+            $('#content').html(content);
+            cat_search( (res) => {
+                type = res.data.find( (item, index) => {
                     if (item.id == type) {
                         return true
                     }
@@ -260,23 +260,24 @@
                 $('#type').html(type.name);
                 $('#type_category').html(type.name);
             })
-        })
-        comments()
-        function comments() {
-            comment.get_comments(id,function (res) {
+        });
+        
+        comments = () => {
+            get_comments(id, (res) => {
                 res.data.reverse();
-                res.data.forEach(function (item) {
+                res.data.forEach( (item) => {
                     item.firstName = item.name.substr(0,1);
                     item.lastName = item.name.substr(1);
                     item.relative = dayjs(item.dt).toNow()
                 })
                 $('#comment_list_con').html( template('comments_temp',res))
             })
-        }
+        };
+        comments()
         $('#add_btn').click(function () {
-            var name = $('.comment_name').val();
-            var content = $('.comment_input').val();
-            comment.post_comment(name,content,id,function (res) {
+            let name = $('.comment_name').val();
+            let content = $('.comment_input').val();
+            post_comment(name,content,id, (res) => {
                 bootbox.alert(res.msg);
                 comments();
             })

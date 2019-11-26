@@ -1,12 +1,14 @@
-var comment = {
-    get_comments:function (id,fn) {
-        $.get(PORTCONFIG.get_comments,{article_id:id},function (res) {
+const COMMENT = {
+    get_comments: (id, fn) => {
+        $.get(PORTCONFIG.get_comments, { article_id: id }, (res) => {
             fn(res)
         })
     },
-    post_comment: function (name,content,id,fn) {
-        $.post(PORTCONFIG.post_comment,{name:name,content:content,article_id:id},function (res) {
+    post_comment: (name, content, id, fn) => {
+        $.post(PORTCONFIG.post_comment, { name: name, content: content, article_id: id }, (res) => {
             fn(res)
         })
     }
 }
+
+let {post_comment,get_comments} = COMMENT;

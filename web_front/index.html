@@ -246,13 +246,12 @@
         {{/each}}
     </script>
     <script>
-        category.search(function (res) {
+        cat_search( (res) => {
             $('.level_two').html(`<li class="up"></li>` + template('category_temp', res))
             $('.left_menu').html(template('category_temp', res))
         })
-        article.article_search({ perpage: 5 }, function (res) {
+        art_search({ perpage: 5 }, (res) => {
             $('.focus_list').html(template('search_temp',res));
-
         })
     </script>
 </body>
