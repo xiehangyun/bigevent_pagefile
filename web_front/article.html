@@ -274,7 +274,7 @@
             })
         };
         comments()
-        $('#add_btn').click(function () {
+        $('#add_btn').click( () => {
             let name = $('.comment_name').val();
             let content = $('.comment_input').val();
             post_comment(name,content,id, (res) => {
